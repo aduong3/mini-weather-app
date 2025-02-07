@@ -1,9 +1,11 @@
-const form = document.querySelector('form');
-form.addEventListener('submit', handleSubmit);
+const form = document.querySelector("form");
+const degrees = document.querySelector(".degrees");
 
-function handleSubmit(e){
-    e.preventDefault();
-    inputLocation();
+form.addEventListener("submit", handleSubmit);
+
+function handleSubmit(e) {
+  e.preventDefault();
+  inputLocation();
 }
 
 function spliceTime(sunrise = "06:45:30", sunset = "7:30:22") {
@@ -26,7 +28,7 @@ async function fetchData(location) {
     throw new Error("Fetch failed");
   }
   const result = await response.json();
-//   console.log(result);
+  console.log(result);
 
   const data = processData(result);
   displayData(data);
@@ -38,7 +40,7 @@ function toCelsius(degreesF) {
 
 function processData(result) {
   const today = result.days[0];
-  const {sunrise, sunset} = spliceTime(today.sunrise, today.sunset);
+  const { sunrise, sunset } = spliceTime(today.sunrise, today.sunset);
 
   const returnedData = {
     address: result.resolvedAddress,
@@ -55,16 +57,38 @@ function processData(result) {
   return returnedData;
 }
 
+function removeDataContainer() {
+  const dataContainer = document.querySelector(".dataContainer");
+
+  if (dataContainer) dataContainer.remove();
+}
+
 function displayData(data) {
-    console.log(data);
-    const test = document.createElement('p');
-    test.textContent = data.address;
-    document.body.appendChild(test);
+  removeDataContainer();
+  const dataContainer = document.createElement("div");
+  dataContainer.classList.add("dataContainer");
+
+  const weather = document.createElement("p");
+  weather.classList.add("weather");
+  weather.textContent = data.conditions;
+  dataContainer.appendChild(weather);
+
+  const location = document.createElement("p");
+  location.textContent = data.address;
+  dataContainer.appendChild(location);
+
+  document.body.appendChild(dataContainer);
 }
 
-function inputLocation(){
-    const locationInput = document.querySelector('#location');
-    fetchData(locationInput.value);
+function inputLocation() {
+  const locationInput = document.querySelector("#location");
+  fetchData(locationInput.value);
 }
 
+function changeDegrees() {
+  const degrees = document.querySelector(".degrees");
+  degrees.value = degrees.value === "Fahrenheit" ? "Celsius" : "Fahrenheit";
+  degrees.textContent = degrees.value === "Fahrenheit" ? "\u00B0F" : "\u00B0C";
+}
 
+degrees.addEventListener("click", changeDegrees);
