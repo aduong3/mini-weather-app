@@ -7,8 +7,16 @@
     font-family: 'Fredoka', Arial, Helvetica, sans-serif;
 }
 
-body{
-background-image: url('./images/dark_weather.jpg');
+body.dark{
+    color: white;
+    fill: white;
+    background-image: url('./images/dark_weather.jpg');
+}
+
+body.light{
+    color: black;
+    fill: black;
+    background-image: url('./images/bright_weather.jpg');
 }
 
 .header{
@@ -27,11 +35,10 @@ background-image: url('./images/dark_weather.jpg');
 }
 
 .logo{
-    font-size: 2rem;
+    font-size: 4rem;
     font-weight: bold;
     letter-spacing: 2px;
     padding: 8px;
-    color: white;
 }
 
 .inputs{
@@ -49,7 +56,6 @@ form input[type='text']{
 
 .menuButton{
     max-width: 35px;
-    fill: white;
     cursor: pointer;
     margin-left: 12px;
 }
@@ -59,8 +65,32 @@ form input[type='text']{
     margin-top: 4px;
 }
 
-.menu{
+.menu.dark{
     background-color: rgb(39, 39, 39);
+}
+
+.menu.dark button{
+    color: white;
+}
+
+.menu.light{
+    background-color:rgb(230, 230, 230);
+}
+
+
+.menu button{
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+    font-size: 1.4rem;
+    padding: 12px;
+}
+
+.menu button:hover{
+    background-color: rgba(0, 0, 0, 0.116);
+}
+
+.menu{
     width: 250px;
     left: -250px;
     z-index: 1000;
@@ -82,22 +112,6 @@ form input[type='text']{
     align-items: center;
 }
 
-.degrees{
-    cursor:pointer;
-    font-size: 1.4rem;
-    border: none;
-    background-color: transparent;
-    color: white;
-}
-
-.dark-light-mode{
-    background-color: transparent;
-    color: white;
-    border: none;
-    font-size: 1.4rem;
-    cursor: pointer;
-}
-
 .logoInMenu{
     font-size: 1.4rem;
     width: 100%;
@@ -108,9 +122,8 @@ form input[type='text']{
 position: absolute;
 top: 50%;
 left: 50%;
-translate: -50% -75%;
+translate: -50% -60%;
 text-align: center;
-color: white;
 font-weight: bold;
 padding: 32px;
 }
@@ -155,7 +168,6 @@ padding: 32px;
 
 .sunriseTime svg, .sunsetTime svg{
     width: 25px;
-    fill: white;
 }
 
 .tempMaxDiv, .tempMinDiv{

@@ -1,6 +1,7 @@
 const form = document.querySelector("form");
 const degrees = document.querySelector(".degrees");
 let menuButtons = document.querySelectorAll(".menuButton");
+const darkLightButton = document.querySelector(".dark-light-mode");
 
 //bright photo Photo by <a href="https://unsplash.com/@wolfgang_hasselmann?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Wolfgang Hasselmann</a> on <a href="https://unsplash.com/photos/blue-sky-and-white-clouds-over-lake-bR_-gllg7Bs?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
 //dark photo Photo by <a href="https://unsplash.com/@wackeltin_meem?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Valentin Müller</a> on <a href="https://unsplash.com/photos/dew-drops-on-glass-panel-bWtd1ZyEy6w?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
@@ -32,7 +33,7 @@ async function fetchData(location) {
     throw new Error("Fetch failed");
   }
   const result = await response.json();
-  console.log(result);
+  //console.log(result);
 
   const data = processData(result);
   displayData(data);
@@ -103,7 +104,7 @@ const svgList = {
   },
 };
 
-function createSpanDegrees(){
+function createSpanDegrees() {
   const spanDegrees = document.createElement("span");
   spanDegrees.classList.add("spanDegrees");
   spanDegrees.textContent = "\u00B0F";
@@ -135,8 +136,6 @@ function displayData(data) {
   temperature.textContent = data.temp;
   tempDiv.appendChild(temperature);
 
-
-
   tempDiv.appendChild(createSpanDegrees());
   infoDiv.appendChild(tempDiv);
 
@@ -147,21 +146,21 @@ function displayData(data) {
   const additionalInfoDiv = document.createElement("div");
   additionalInfoDiv.classList.add("additionalInfoDiv");
 
-  const tempMaxDiv = document.createElement('div');
-  tempMaxDiv.classList.add('tempMaxDiv');
+  const tempMaxDiv = document.createElement("div");
+  tempMaxDiv.classList.add("tempMaxDiv");
 
-  const tempMaxSymbol = document.createElement('p');
-  tempMaxSymbol.textContent = '\u2191';
+  const tempMaxSymbol = document.createElement("p");
+  tempMaxSymbol.textContent = "\u2191";
 
   const tempMax = document.createElement("p");
   tempMax.classList.add("tempMax");
   tempMax.textContent = `${data.tempMax}`;
 
-  const tempMinDiv = document.createElement('div');
-  tempMinDiv.classList.add('tempMinDiv');
+  const tempMinDiv = document.createElement("div");
+  tempMinDiv.classList.add("tempMinDiv");
 
-  const tempMinSymbol = document.createElement('p');
-  tempMinSymbol.textContent = '\u2193';
+  const tempMinSymbol = document.createElement("p");
+  tempMinSymbol.textContent = "\u2193";
 
   const tempMin = document.createElement("p");
   tempMin.classList.add("tempMin");
@@ -200,35 +199,48 @@ function displayData(data) {
 function inputLocation() {
   const locationInput = document.querySelector("#location");
   fetchData(locationInput.value);
+  locationInput.value = '';
 }
 
 function changeDegrees() {
   const degrees = document.querySelector(".degrees");
   const isFahrenheit = degrees.value === "Fahrenheit";
   degrees.value = isFahrenheit ? "Celsius" : "Fahrenheit";
-  degrees.textContent = isFahrenheit ? "Fahrenheit" : "Celsius";
+  degrees.textContent = isFahrenheit ? "Celsius" : "Fahrenheit";
 
   const temperature = document.querySelector(".temperature");
   const spanDegrees = document.querySelectorAll(".spanDegrees");
   const tempMax = document.querySelector(".tempMax");
   const tempMin = document.querySelector(".tempMin");
 
-  console.log(typeof Number(temperature.textContent));
+  //console.log(typeof Number(temperature.textContent));
 
   if (!isFahrenheit) {
-    temperature.textContent = Math.round(toFahrenheit(Number(temperature.textContent)));
+    temperature.textContent = Math.round(
+      toFahrenheit(Number(temperature.textContent))
+    );
     spanDegrees.forEach((spanDegree) => {
       spanDegree.textContent = "\u00B0F";
-    })
-    tempMax.textContent = `${Math.round(toFahrenheit(Number(tempMax.textContent)))}`;
-    tempMin.textContent = `${Math.round(toFahrenheit(Number(tempMin.textContent)))}`;
+    });
+    tempMax.textContent = `${Math.round(
+      toFahrenheit(Number(tempMax.textContent))
+    )}`;
+    tempMin.textContent = `${Math.round(
+      toFahrenheit(Number(tempMin.textContent))
+    )}`;
   } else {
-    temperature.textContent = Math.round(toCelsius(Number(temperature.textContent)));
+    temperature.textContent = Math.round(
+      toCelsius(Number(temperature.textContent))
+    );
     spanDegrees.forEach((spanDegree) => {
       spanDegree.textContent = "\u00B0C";
-    })
-    tempMax.textContent = ` ${Math.round(toCelsius(Number(tempMax.textContent)))}`;
-    tempMin.textContent = ` ${Math.round(toCelsius(Number(tempMin.textContent)))}`;
+    });
+    tempMax.textContent = ` ${Math.round(
+      toCelsius(Number(tempMax.textContent))
+    )}`;
+    tempMin.textContent = ` ${Math.round(
+      toCelsius(Number(tempMin.textContent))
+    )}`;
   }
 }
 
@@ -246,5 +258,23 @@ menuButtons.forEach((menuButton) => {
 });
 
 degrees.addEventListener("click", changeDegrees);
+
+function changeDarkLightMode() {
+  const menu = document.querySelector(".menu");
+  const getMode = document.querySelector(".dark-light-mode");
+  const isDarkMode = getMode.value === "dark";
+  getMode.value = isDarkMode ? "light" : "dark";
+  getMode.textContent = isDarkMode ? "Light Mode" : "Dark Mode";
+
+  if (isDarkMode) {
+    document.body.classList.replace("dark", "light");
+    menu.classList.replace("dark", "light");
+  } else {
+    document.body.classList.replace("light", "dark");
+    menu.classList.replace("light", "dark");
+  }
+}
+
+darkLightButton.addEventListener("click", changeDarkLightMode);
 
 fetchData("Denver");
