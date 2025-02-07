@@ -72,15 +72,37 @@ function displayData(data) {
   const dataContainer = document.createElement("div");
   dataContainer.classList.add("dataContainer");
 
+  const middleDiv = document.createElement('div');
+  middleDiv.classList.add('middleDiv');
+
   const weather = document.createElement("p");
   weather.classList.add("weather");
   weather.textContent = data.conditions;
-  dataContainer.appendChild(weather);
+  middleDiv.appendChild(weather);
+
+  const tempDiv = document.createElement('div');
+  tempDiv.classList.add('tempDiv');
+
+  const temperature = document.createElement('p');
+  temperature.textContent = data.temp_F;
+  temperature.classList.add('temperature');
+  tempDiv.appendChild(temperature);
+
+  const spanDegrees = document.createElement('span');
+  spanDegrees.textContent = '\u00B0F';
+  spanDegrees.classList.add('spanDegrees');
+  tempDiv.appendChild(spanDegrees);
+
+  middleDiv.appendChild(tempDiv);
 
   const location = document.createElement("p");
   location.textContent = data.address;
-  dataContainer.appendChild(location);
+  location.classList.add('location');
+  middleDiv.appendChild(location);
 
+
+
+  dataContainer.appendChild(middleDiv);
   document.body.appendChild(dataContainer);
 }
 

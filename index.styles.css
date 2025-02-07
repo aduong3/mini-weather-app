@@ -1,10 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&display=swap');
 
 *{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Roboto', Arial, Helvetica, sans-serif;
+    font-family: 'Fredoka', Arial, Helvetica, sans-serif;
 }
 
 body{
@@ -102,4 +102,37 @@ form input[type='text']{
     font-size: 1.4rem;
     width: 100%;
     text-align: center;
+}
+
+.dataContainer{
+position: absolute;
+top: 50%;
+left: 50%;
+translate: -50% -75%;
+text-align: center;
+color: white;
+font-weight: bold;
+}
+
+.middleDiv{
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.tempDiv{
+    display: flex;
+    justify-content: center;
+}
+
+.location, .weather{
+    font-size: 1.9rem;
+}
+
+.temperature{
+    font-size: 6rem;
+}
+
+.spanDegrees{
+    font-size: 1.3rem;
 }
