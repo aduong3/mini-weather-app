@@ -39,7 +39,11 @@ async function fetchData(location) {
 }
 
 function toCelsius(degreesF) {
-  return ((degreesF - 32) * 5) / 9;
+  return (degreesF - 32) * (5 / 9);
+}
+
+function toFahrenheit(degreesC) {
+  return degreesC * (9 / 5) + 32;
 }
 
 function processData(result) {
@@ -49,12 +53,9 @@ function processData(result) {
   const returnedData = {
     address: result.resolvedAddress,
     conditions: today.conditions,
-    temp_F: Math.ceil(today.temp),
-    temp_C: Math.ceil(toCelsius(today.temp)),
-    tempMax_F: Math.ceil(today.tempmax),
-    tempMax_C: Math.ceil(toCelsius(today.tempmax)),
-    tempMin_F: Math.ceil(today.tempmin),
-    tempMin_C: Math.ceil(toCelsius(today.tempmin)),
+    temp: Math.ceil(today.temp),
+    tempMax: Math.ceil(today.tempmax),
+    tempMin: Math.ceil(today.tempmin),
     sunrise,
     sunset,
   };
@@ -102,6 +103,14 @@ const svgList = {
   },
 };
 
+function createSpanDegrees(){
+  const spanDegrees = document.createElement("span");
+  spanDegrees.classList.add("spanDegrees");
+  spanDegrees.textContent = "\u00B0F";
+
+  return spanDegrees;
+}
+
 function displayData(data) {
   removeDataContainer();
   const dataContainer = document.createElement("div");
@@ -118,17 +127,17 @@ function displayData(data) {
   const infoDiv = document.createElement("div");
   infoDiv.classList.add("infoDiv");
 
-  const tempDiv = document.createElement('div');
-  tempDiv.classList.add('tempDiv');
+  const tempDiv = document.createElement("div");
+  tempDiv.classList.add("tempDiv");
 
   const temperature = document.createElement("p");
   temperature.classList.add("temperature");
+  temperature.textContent = data.temp;
   tempDiv.appendChild(temperature);
 
-  const spanDegrees = document.createElement("span");
-  spanDegrees.classList.add("spanDegrees");
-  //console.log(spanDegrees, "created");
-  tempDiv.appendChild(spanDegrees);
+
+
+  tempDiv.appendChild(createSpanDegrees());
   infoDiv.appendChild(tempDiv);
 
   const location = document.createElement("p");
@@ -138,11 +147,25 @@ function displayData(data) {
   const additionalInfoDiv = document.createElement("div");
   additionalInfoDiv.classList.add("additionalInfoDiv");
 
+  const tempMaxDiv = document.createElement('div');
+  tempMaxDiv.classList.add('tempMaxDiv');
+
+  const tempMaxSymbol = document.createElement('p');
+  tempMaxSymbol.textContent = '\u2191';
+
   const tempMax = document.createElement("p");
   tempMax.classList.add("tempMax");
+  tempMax.textContent = `${data.tempMax}`;
+
+  const tempMinDiv = document.createElement('div');
+  tempMinDiv.classList.add('tempMinDiv');
+
+  const tempMinSymbol = document.createElement('p');
+  tempMinSymbol.textContent = '\u2193';
 
   const tempMin = document.createElement("p");
   tempMin.classList.add("tempMin");
+  tempMin.textContent = `${data.tempMin}`;
 
   const sunriseTime = document.createElement("p");
   sunriseTime.classList.add("sunriseTime");
@@ -154,8 +177,16 @@ function displayData(data) {
   sunsetTime.appendChild(svgList.sunset());
   sunsetTime.append(data.sunset);
 
-  additionalInfoDiv.appendChild(tempMax);
-  additionalInfoDiv.appendChild(tempMin);
+  tempMaxDiv.appendChild(tempMaxSymbol);
+  tempMaxDiv.appendChild(tempMax);
+  tempMaxDiv.appendChild(createSpanDegrees());
+
+  tempMinDiv.appendChild(tempMinSymbol);
+  tempMinDiv.appendChild(tempMin);
+  tempMinDiv.appendChild(createSpanDegrees());
+
+  additionalInfoDiv.appendChild(tempMaxDiv);
+  additionalInfoDiv.appendChild(tempMinDiv);
   additionalInfoDiv.appendChild(sunriseTime);
   additionalInfoDiv.appendChild(sunsetTime);
 
@@ -164,7 +195,6 @@ function displayData(data) {
   middleDiv.appendChild(location);
   dataContainer.appendChild(middleDiv);
   document.body.appendChild(dataContainer);
-
 }
 
 function inputLocation() {
@@ -172,27 +202,33 @@ function inputLocation() {
   fetchData(locationInput.value);
 }
 
-function changeDegrees(data) {
+function changeDegrees() {
   const degrees = document.querySelector(".degrees");
   const isFahrenheit = degrees.value === "Fahrenheit";
   degrees.value = isFahrenheit ? "Celsius" : "Fahrenheit";
   degrees.textContent = isFahrenheit ? "Fahrenheit" : "Celsius";
 
   const temperature = document.querySelector(".temperature");
-  const spanDegrees = document.querySelector(".spanDegrees");
+  const spanDegrees = document.querySelectorAll(".spanDegrees");
   const tempMax = document.querySelector(".tempMax");
   const tempMin = document.querySelector(".tempMin");
 
-  if (isFahrenheit) {
-    temperature.textContent = data.temp_F;
-    spanDegrees.textContent = "\u00B0F";
-    tempMax.textContent = `\u2191 ${data.tempMax_F}\u00B0F`;
-    tempMin.textContent = `\u2193 ${data.tempMin_F}\u00B0F`;
+  console.log(typeof Number(temperature.textContent));
+
+  if (!isFahrenheit) {
+    temperature.textContent = Math.round(toFahrenheit(Number(temperature.textContent)));
+    spanDegrees.forEach((spanDegree) => {
+      spanDegree.textContent = "\u00B0F";
+    })
+    tempMax.textContent = `${Math.round(toFahrenheit(Number(tempMax.textContent)))}`;
+    tempMin.textContent = `${Math.round(toFahrenheit(Number(tempMin.textContent)))}`;
   } else {
-    temperature.textContent = data.temp_C;
-    spanDegrees.textContent = "\u00B0C";
-    tempMax.textContent = `\u2191 ${data.tempMax_C}\u00B0C`;
-    tempMin.textContent = `\u2193 ${data.tempMin_C}\u00B0C`;
+    temperature.textContent = Math.round(toCelsius(Number(temperature.textContent)));
+    spanDegrees.forEach((spanDegree) => {
+      spanDegree.textContent = "\u00B0C";
+    })
+    tempMax.textContent = ` ${Math.round(toCelsius(Number(tempMax.textContent)))}`;
+    tempMin.textContent = ` ${Math.round(toCelsius(Number(tempMin.textContent)))}`;
   }
 }
 
@@ -208,3 +244,7 @@ function showAndHideMenu() {
 menuButtons.forEach((menuButton) => {
   menuButton.addEventListener("click", showAndHideMenu);
 });
+
+degrees.addEventListener("click", changeDegrees);
+
+fetchData("Denver");
