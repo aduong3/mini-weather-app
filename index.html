@@ -7,10 +7,19 @@
     <link rel="stylesheet" href="./index.styles.css" />
   </head>
   <body>
-    <div class="header">
+    <svg class="menuButton hidingButton" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>menu</title><path d="M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z" /></svg>
+    <div class="menu">
+      <div class="menuHeader">
+      <svg class="menuButton" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>menu</title><path d="M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z" /></svg>
+      <p class="logo logoInMenu">Weatherly</p>
+      </div>
+        <button type="button" class="degrees" value="Fahrenheit">Fahrenheit</button>
+        <button type="button" class="dark-light-mode" value="dark">Dark Mode</button>
+    </div>
+   
+    <div class="header dark">
       <div class="logoContainer">
         <p class="logo">Weatherly</p>
-        <button type="button" class="degrees" value="Fahrenheit">&deg;F</span>
       </div>
       <form>
         <input

@@ -1,5 +1,9 @@
 const form = document.querySelector("form");
 const degrees = document.querySelector(".degrees");
+let menuButtons = document.querySelectorAll(".menuButton");
+
+//bright photo Photo by <a href="https://unsplash.com/@wolfgang_hasselmann?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Wolfgang Hasselmann</a> on <a href="https://unsplash.com/photos/blue-sky-and-white-clouds-over-lake-bR_-gllg7Bs?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
+//dark photo Photo by <a href="https://unsplash.com/@wackeltin_meem?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Valentin Müller</a> on <a href="https://unsplash.com/photos/dew-drops-on-glass-panel-bWtd1ZyEy6w?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
 
 form.addEventListener("submit", handleSubmit);
 
@@ -88,7 +92,21 @@ function inputLocation() {
 function changeDegrees() {
   const degrees = document.querySelector(".degrees");
   degrees.value = degrees.value === "Fahrenheit" ? "Celsius" : "Fahrenheit";
-  degrees.textContent = degrees.value === "Fahrenheit" ? "\u00B0F" : "\u00B0C";
+  degrees.textContent =
+    degrees.value === "Fahrenheit" ? "Fahrenheit" : "Celsius";
 }
 
 degrees.addEventListener("click", changeDegrees);
+
+function showAndHideMenu() {
+  const menu = document.querySelector(".menu");
+  if (menu.classList.contains("active")) {
+    menu.classList.remove("active");
+  } else {
+    menu.classList.add("active");
+  }
+}
+
+menuButtons.forEach((menuButton) => {
+  menuButton.addEventListener("click", showAndHideMenu);
+});

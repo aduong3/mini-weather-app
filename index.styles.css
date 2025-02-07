@@ -7,6 +7,9 @@
     font-family: 'Roboto', Arial, Helvetica, sans-serif;
 }
 
+body{
+background-image: url('./images/dark_weather.jpg');
+}
 
 .header{
     display: flex;
@@ -18,6 +21,9 @@
 .logoContainer{
     display: flex;
     align-items: center;
+    justify-content: center;
+    padding: 8px;
+    width: 100%;
 }
 
 .logo{
@@ -25,13 +31,7 @@
     font-weight: bold;
     letter-spacing: 2px;
     padding: 8px;
-}
-
-.degrees{
-    cursor:pointer;
-    font-size: 1.4rem;
-    border: none;
-    background-color: transparent;
+    color: white;
 }
 
 .inputs{
@@ -43,4 +43,63 @@
 form input[type='text']{
     padding: 2px 4px;
     font-size: 1rem;
+    border-radius: 6px;
+    border: 1px solid rgb(121, 121, 121);
+}
+
+.menuButton{
+    max-width: 35px;
+    fill: white;
+    cursor: pointer;
+    margin-left: 12px;
+}
+
+.hidingButton{
+    position: absolute;
+    margin-top: 4px;
+}
+
+.menu{
+    background-color: rgb(39, 39, 39);
+    width: 250px;
+    left: -250px;
+    z-index: 1000;
+    transition: left 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 36px;
+    height: 100svh;
+    position: absolute;
+}
+
+.menu.active{
+    left: 0;
+}
+
+
+.menuHeader{
+    display: flex;
+    align-items: center;
+}
+
+.degrees{
+    cursor:pointer;
+    font-size: 1.4rem;
+    border: none;
+    background-color: transparent;
+    color: white;
+}
+
+.dark-light-mode{
+    background-color: transparent;
+    color: white;
+    border: none;
+    font-size: 1.4rem;
+    cursor: pointer;
+}
+
+.logoInMenu{
+    font-size: 1.4rem;
+    width: 100%;
+    text-align: center;
 }
