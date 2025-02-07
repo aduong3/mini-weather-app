@@ -121,10 +121,13 @@ padding: 32px;
     gap: 24px;
 }
 
-.tempDiv{
+.infoDiv{
     display: flex;
     justify-content: space-evenly;
     gap: 16px;
+}
+.tempDiv{
+    display: flex;
 }
 
 .location, .weather{

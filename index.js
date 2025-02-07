@@ -115,36 +115,34 @@ function displayData(data) {
   weather.textContent = data.conditions;
   middleDiv.appendChild(weather);
 
-  const tempDiv = document.createElement("div");
-  tempDiv.classList.add("tempDiv");
+  const infoDiv = document.createElement("div");
+  infoDiv.classList.add("infoDiv");
+
+  const tempDiv = document.createElement('div');
+  tempDiv.classList.add('tempDiv');
 
   const temperature = document.createElement("p");
-  temperature.textContent = data.temp_F;
   temperature.classList.add("temperature");
   tempDiv.appendChild(temperature);
 
   const spanDegrees = document.createElement("span");
-  spanDegrees.textContent = "\u00B0F";
   spanDegrees.classList.add("spanDegrees");
-  temperature.appendChild(spanDegrees);
-
-  middleDiv.appendChild(tempDiv);
+  //console.log(spanDegrees, "created");
+  tempDiv.appendChild(spanDegrees);
+  infoDiv.appendChild(tempDiv);
 
   const location = document.createElement("p");
   location.textContent = data.address;
   location.classList.add("location");
-  middleDiv.appendChild(location);
 
   const additionalInfoDiv = document.createElement("div");
   additionalInfoDiv.classList.add("additionalInfoDiv");
 
   const tempMax = document.createElement("p");
   tempMax.classList.add("tempMax");
-  tempMax.textContent = `\u2191 ${data.tempMax_F}\u00B0F`;
 
   const tempMin = document.createElement("p");
   tempMin.classList.add("tempMin");
-  tempMin.textContent = `\u2193 ${data.tempMin_F}\u00B0F`;
 
   const sunriseTime = document.createElement("p");
   sunriseTime.classList.add("sunriseTime");
@@ -161,9 +159,12 @@ function displayData(data) {
   additionalInfoDiv.appendChild(sunriseTime);
   additionalInfoDiv.appendChild(sunsetTime);
 
+  infoDiv.appendChild(additionalInfoDiv);
+  middleDiv.appendChild(infoDiv);
+  middleDiv.appendChild(location);
   dataContainer.appendChild(middleDiv);
-  tempDiv.appendChild(additionalInfoDiv);
   document.body.appendChild(dataContainer);
+
 }
 
 function inputLocation() {
@@ -171,14 +172,29 @@ function inputLocation() {
   fetchData(locationInput.value);
 }
 
-function changeDegrees() {
+function changeDegrees(data) {
   const degrees = document.querySelector(".degrees");
-  degrees.value = degrees.value === "Fahrenheit" ? "Celsius" : "Fahrenheit";
-  degrees.textContent =
-    degrees.value === "Fahrenheit" ? "Fahrenheit" : "Celsius";
-}
+  const isFahrenheit = degrees.value === "Fahrenheit";
+  degrees.value = isFahrenheit ? "Celsius" : "Fahrenheit";
+  degrees.textContent = isFahrenheit ? "Fahrenheit" : "Celsius";
 
-degrees.addEventListener("click", changeDegrees);
+  const temperature = document.querySelector(".temperature");
+  const spanDegrees = document.querySelector(".spanDegrees");
+  const tempMax = document.querySelector(".tempMax");
+  const tempMin = document.querySelector(".tempMin");
+
+  if (isFahrenheit) {
+    temperature.textContent = data.temp_F;
+    spanDegrees.textContent = "\u00B0F";
+    tempMax.textContent = `\u2191 ${data.tempMax_F}\u00B0F`;
+    tempMin.textContent = `\u2193 ${data.tempMin_F}\u00B0F`;
+  } else {
+    temperature.textContent = data.temp_C;
+    spanDegrees.textContent = "\u00B0C";
+    tempMax.textContent = `\u2191 ${data.tempMax_C}\u00B0C`;
+    tempMin.textContent = `\u2193 ${data.tempMin_C}\u00B0C`;
+  }
+}
 
 function showAndHideMenu() {
   const menu = document.querySelector(".menu");
