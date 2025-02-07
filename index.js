@@ -194,6 +194,13 @@ function displayData(data) {
   middleDiv.appendChild(location);
   dataContainer.appendChild(middleDiv);
   document.body.appendChild(dataContainer);
+
+  const degrees = document.querySelector(".degrees");
+  if(degrees.value === 'Celsius'){
+    degrees.value = 'Fahrenheit';
+    changeDegrees();
+  }
+  
 }
 
 function inputLocation() {
