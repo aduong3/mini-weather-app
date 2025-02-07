@@ -173,3 +173,23 @@ padding: 32px;
 .tempMaxDiv, .tempMinDiv{
     display: flex;
 }
+
+.credit{
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    translate: -50% 0%;
+    text-decoration: none;
+    font-size: 1.2rem;
+    padding: 6px;
+}
+
+.credit.dark{
+    color: white;
+    background-color: rgba(0, 0, 0, 0.349);
+}
+
+.credit.light{
+    color: black;
+    background-color: rgba(255, 255, 255, 0.349);
+}

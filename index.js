@@ -196,17 +196,16 @@ function displayData(data) {
   document.body.appendChild(dataContainer);
 
   const degrees = document.querySelector(".degrees");
-  if(degrees.value === 'Celsius'){
-    degrees.value = 'Fahrenheit';
+  if (degrees.value === "Celsius") {
+    degrees.value = "Fahrenheit";
     changeDegrees();
   }
-  
 }
 
 function inputLocation() {
   const locationInput = document.querySelector("#location");
   fetchData(locationInput.value);
-  locationInput.value = '';
+  locationInput.value = "";
 }
 
 function changeDegrees() {
@@ -268,6 +267,7 @@ degrees.addEventListener("click", changeDegrees);
 
 function changeDarkLightMode() {
   const menu = document.querySelector(".menu");
+  const credit = document.querySelector(".credit");
   const getMode = document.querySelector(".dark-light-mode");
   const isDarkMode = getMode.value === "dark";
   getMode.value = isDarkMode ? "light" : "dark";
@@ -276,9 +276,18 @@ function changeDarkLightMode() {
   if (isDarkMode) {
     document.body.classList.replace("dark", "light");
     menu.classList.replace("dark", "light");
+    credit.textContent = "Background photo by Valentin Müller";
+    credit.href =
+      "https://unsplash.com/photos/dew-drops-on-glass-panel-bWtd1ZyEy6w?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash";
+    credit.classList.replace("dark", "light");
   } else {
     document.body.classList.replace("light", "dark");
     menu.classList.replace("light", "dark");
+    credit.textContent = "Background photo by Wolfgang Hasselmann";
+    credit.href =
+      "https://unsplash.com/photos/blue-sky-and-white-clouds-over-lake-bR_-gllg7Bs?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash";
+
+    credit.classList.replace("light", "dark");
   }
 }
 
